@@ -1,6 +1,6 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   LogOutIcon,
@@ -17,9 +17,14 @@ const dropdownVariants = {
   exit: { opacity: 0, scale: 0.95, y: -5 },
 };
 
-const Menu: React.FC = () => {
+interface Props {
+  onClose: () => void;
+}
+
+const Menu: React.FC<Props> = ({ onClose }) => {
   const data = useAppSelector((s) => s.auth);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   return (
     <AnimatePresence>
@@ -44,36 +49,61 @@ const Menu: React.FC = () => {
         </div>
         <div className="h-[1.5px] w-full bg-black/10 dark:bg-neutral-800 my-2"></div>
         <div className="px-2 py-1 flex flex-col gap-1">
-          <div className="flex hover:dark:bg-neutral-800 transition-all duration-200 ease-in-out hover:bg-neutral-50 rounded-sm cursor-pointer p-1 items-center justify-start gap-4">
+          <div
+            className="flex hover:dark:bg-neutral-800 transition-all duration-200 ease-in-out
+           hover:bg-neutral-50 rounded-sm cursor-pointer p-1 items-center justify-start gap-4"
+          >
             <LayoutDashboard className="w-4 text-neutral-400" />
-            <Link className="capitalize text-base dark:text-white" to={"/"}>
+            <Link
+              onClick={onClose}
+              className="capitalize text-base dark:text-white"
+              to={"/"}
+            >
               dashboard
             </Link>
           </div>
-          <div className="flex hover:dark:bg-neutral-800 transition-all duration-200 ease-in-out hover:bg-neutral-50 rounded-sm cursor-pointer p-1 items-center justify-start gap-3">
+          <div
+            className="flex hover:dark:bg-neutral-800 transition-all duration-200 ease-in-out
+           hover:bg-neutral-50 rounded-sm cursor-pointer p-1 items-center justify-start gap-3"
+          >
             <PencilIcon className="w-4 text-neutral-400" />
-            <Link className="capitalize text-base dark:text-white" to={"/"}>
+            <Link
+              onClick={onClose}
+              className="capitalize text-base dark:text-white"
+              to={"/"}
+            >
               write Article
             </Link>
           </div>
         </div>
         <div className="h-[1.5px] w-full bg-black/10 dark:bg-neutral-800 my-2"></div>
         <div className="px-2 py-1 flex flex-col gap-1">
-          <div className="flex hover:dark:bg-neutral-800 transition-all duration-200 ease-in-out hover:bg-neutral-50 rounded-sm cursor-pointer p-1 items-center justify-start gap-4">
+          <div
+            className="flex hover:dark:bg-neutral-800 transition-all duration-200 ease-in-out
+           hover:bg-neutral-50 rounded-sm cursor-pointer p-1 items-center justify-start gap-4"
+          >
             <Settings className="w-4 text-neutral-400" />
-            <Link className="capitalize text-base dark:text-white" to={"/"}>
+            <Link
+              onClick={onClose}
+              className="capitalize text-base dark:text-white"
+              to={"/profile"}
+            >
               profile Settings
             </Link>
           </div>
         </div>
         <div className="h-[1.5px] w-full bg-black/10 dark:bg-neutral-800 my-2"></div>
         <div className="px-2 py-1 flex flex-col gap-1">
-          <div className="flex hover:dark:bg-neutral-800 transition-all duration-200 ease-in-out hover:bg-neutral-50 rounded-sm cursor-pointer p-1 items-center justify-start gap-4">
+          <div
+            className="flex hover:dark:bg-neutral-800 transition-all duration-200 ease-in-out
+           hover:bg-neutral-50 rounded-sm cursor-pointer p-1 items-center justify-start gap-4"
+          >
             <LogOutIcon className="w-4 text-neutral-400" />
             <button
               onClick={() => {
                 dispatch(logout());
                 dispatch(notifySuccess("Logout successfully"));
+                navigate("/");
               }}
               className="capitalize cursor-pointer text-red-600 text-base"
             >

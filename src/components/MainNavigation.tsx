@@ -4,6 +4,7 @@ import { Moon, Search, Sun } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { toggleTheme } from "../features/ui/uiSlice";
 import Menu from "./ui/Menu";
+import { AnimatePresence } from "motion/react";
 
 const MainNavigation: React.FC = () => {
   const { theme } = useAppSelector((s) => s.ui);
@@ -58,7 +59,9 @@ const MainNavigation: React.FC = () => {
             >
               {user?.first_name[0]}
             </button>
-            {isOpen && <Menu />}
+            <AnimatePresence>
+              {isOpen && <Menu onClose={() => setIsOpen(false)} />}
+            </AnimatePresence>
           </div>
         )}
       </div>
