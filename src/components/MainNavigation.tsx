@@ -9,7 +9,6 @@ const MainNavigation: React.FC = () => {
   const { theme } = useAppSelector((s) => s.ui);
   const { isAuthenticated, user } = useAppSelector((s) => s.auth);
   const [isOpen, setIsOpen] = useState(false);
-  console.log(user);
 
   const dispatch = useAppDispatch();
 

@@ -1,14 +1,18 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { AuthState, User } from "./auth.types";
-// import { loadFromStorage } from "../../utils/storage";
+import {
+  loadFromStorage,
+  RemoveFromStorage,
+  saveToStorage,
+} from "../../utils/storage";
 
-// const storedToken = loadFromStorage("token");
-// const storedUser = loadFromStorage("user");
+const storedToken = loadFromStorage("token");
+const storedUser = loadFromStorage("user");
 
 const initialState: AuthState = {
-  user: null,
-  token: null,
-  isAuthenticated: false,
+  user: storedUser,
+  token: storedToken,
+  isAuthenticated: !!storedToken,
 };
 
 export const authSlice = createSlice({
@@ -19,11 +23,17 @@ export const authSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isAuthenticated = true;
+      saveToStorage("user", action.payload.user);
+      saveToStorage("token", action.payload.token);
+      saveToStorage("loginTime", Date.now().toString());
     },
     logout: (state) => {
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
+      RemoveFromStorage("token");
+      RemoveFromStorage("user");
+      RemoveFromStorage("loginTime");
     },
     updateProfile: (state, action: PayloadAction<User>) => {
       if (state.user) {

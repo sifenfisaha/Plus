@@ -34,7 +34,7 @@ const AuthForm: React.FC = () => {
         {isLogin ? <LoginForm /> : <SignupForm />}
         <p className="text-base flex items-center justify-center pt-4 w-full text-gray-400">
           {isLogin ? (
-            <p>
+            <span>
               Don't have an account?{" "}
               <Link
                 to={"/auth/signup"}
@@ -42,9 +42,9 @@ const AuthForm: React.FC = () => {
               >
                 Sign up
               </Link>
-            </p>
+            </span>
           ) : (
-            <p>
+            <span>
               Already have an account?{" "}
               <Link
                 to={"/auth/signin"}
@@ -52,7 +52,7 @@ const AuthForm: React.FC = () => {
               >
                 Sign in
               </Link>
-            </p>
+            </span>
           )}
         </p>
       </div>

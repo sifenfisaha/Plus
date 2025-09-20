@@ -8,8 +8,10 @@ import { router } from "../routes/AppRoutes";
 import { useAppSelector } from "./hooks";
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
+import { useLogout } from "../features/auth/hooks";
 
 const ThemeHandler: React.FC = () => {
+  useLogout();
   const { theme } = useAppSelector((s) => s.ui);
   useEffect(() => {
     const root = document.documentElement;
