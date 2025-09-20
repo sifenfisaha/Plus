@@ -1,19 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Moon, Search, Sun } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { toggleTheme } from "../features/ui/uiSlice";
-import { logout } from "../features/auth/authSlice";
+import Menu from "./ui/Menu";
 
 const MainNavigation: React.FC = () => {
   const { theme } = useAppSelector((s) => s.ui);
   const { isAuthenticated, user } = useAppSelector((s) => s.auth);
+  const [isOpen, setIsOpen] = useState(false);
   console.log(user);
 
   const dispatch = useAppDispatch();
 
   return (
-    <header className="flex px-40 py-5 dark:bg-black shadow-sm items-center justify-between">
+    <header className="flex px-40 py-3 dark:bg-black shadow-sm items-center justify-between">
       <Link to="/">
         <h1 className="dark:text-white font-bold font-logo text-2xl">Plus</h1>
       </Link>
@@ -50,12 +51,15 @@ const MainNavigation: React.FC = () => {
           </>
         )}
         {isAuthenticated && (
-          <div>
+          <div className="relative">
             {" "}
-            <button className="w-8 h-8 bg-black text-white rounded-full dark:bg-neutral-700 cursor-pointer dark:text-white font-bold">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="w-8 h-8 bg-black text-white rounded-full dark:bg-neutral-700 cursor-pointer dark:text-white font-bold"
+            >
               {user?.first_name[0]}
             </button>
-            <button onClick={() => dispatch(logout())}>logout</button>
+            {isOpen && <Menu />}
           </div>
         )}
       </div>
