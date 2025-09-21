@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Input from "../ui/Input";
 import {
   useDeleteUser,
@@ -33,11 +33,21 @@ const Layout: React.FC = () => {
   } = useForm<ProfileInput>({
     resolver: zodResolver(profileSchem),
     defaultValues: {
-      first_name: user?.first_name || "",
-      last_name: user?.last_name || "",
-      email: user?.email || "",
+      first_name: "",
+      last_name: "",
+      email: "",
     },
   });
+
+  useEffect(() => {
+    if (user) {
+      reset({
+        first_name: user.first_name,
+        last_name: user.last_name,
+        email: user.email,
+      });
+    }
+  }, [user, reset]);
 
   const submitHandler = (values: ProfileInput) => {
     updateUser(values, {
