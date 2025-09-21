@@ -57,7 +57,7 @@ const Layout: React.FC = () => {
   }
 
   return (
-    <div className="min-w-2xl my-8">
+    <div className="md:min-w-2xl mx-4 my-8">
       <h1 className="text-2xl dark:text-white">Profile Settings</h1>
       <p className="text-neutral-500">
         Manage your account settings and preferences.
@@ -74,7 +74,7 @@ const Layout: React.FC = () => {
             <Input
               label="First name"
               {...register("first_name")}
-              placeholder="John"
+              placeholder="Abebe"
             />
             {errors.first_name && (
               <p className="text-sm text-red-500 mt-1">
@@ -87,7 +87,7 @@ const Layout: React.FC = () => {
             <Input
               label="Last name"
               {...register("last_name")}
-              placeholder="Doe"
+              placeholder="Beso"
             />
             {errors.last_name && (
               <p className="text-sm text-red-500 mt-1">
@@ -113,7 +113,7 @@ const Layout: React.FC = () => {
           <button
             type="submit"
             disabled={!isDirty || updatePending}
-            className="px-4 py-2 cursor-pointer bg-black dark:bg-white  dark:text-black flex items-center gap-2 text-white rounded-sm disabled:opacity-50"
+            className={`px-4 py-2 ${!isDirty || updatePending ? "cursor-not-allowed" : "cursor-pointer"}  bg-black dark:bg-white  dark:text-black flex items-center gap-2 text-white rounded-sm disabled:opacity-50`}
           >
             <Save className="text-shadow-gradient-light w-5" />
             {updatePending ? "Saving..." : "Save Changes"}
@@ -141,7 +141,7 @@ const Layout: React.FC = () => {
         </div>
       </div>
 
-      <div className="p-4 border-[1.6px] border-red-600 my-7 rounded-2xl">
+      <div className="p-4 border-[1px] border-red-600 my-7 rounded-2xl">
         <h1 className="text-xl text-red-500 dark:text-white">Danger Zone</h1>
         <p className="text-neutral-500">
           These actions are irreversible. Please proceed with caution.
@@ -149,7 +149,7 @@ const Layout: React.FC = () => {
         <button
           onClick={() => deleteUser()}
           disabled={deletePending}
-          className="px-4 gap-2 hover:bg-red-800 duration-200 transition-all ease-in-out py-2 flex rounded-sm items-center justify-center bg-red-700 mt-3 text-white disabled:opacity-50"
+          className="px-4 gap-2 hover:bg-red-800 duration-200 transition-all ease-in-out py-2 flex rounded-sm items-center justify-center bg-red-600 cursor-pointer dark:bg-red-700 mt-3 text-white disabled:opacity-50"
         >
           <TrashIcon className="w-5" />
           {deletePending ? "Deleting account..." : "Delete account"}

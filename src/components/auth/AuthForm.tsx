@@ -21,7 +21,7 @@ const AuthForm: React.FC = () => {
             : "Join our community of writers and readers."}
         </p>
       </div>
-      <div className="w-lg mx-auto p-6 border border-gray-100 dark:border-gray-700/50 rounded-xl shadow-sm ">
+      <div className="md:w-lg mx-4  md:mx-auto p-6 border border-gray-100 dark:border-gray-700/50 rounded-xl shadow-sm ">
         <h1 className="text-xl dark:text-white font-semibold">
           {isLogin ? "Login" : "Create Account"}
         </h1>

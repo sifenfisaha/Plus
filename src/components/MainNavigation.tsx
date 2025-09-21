@@ -14,18 +14,10 @@ const MainNavigation: React.FC = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <header className="flex px-40 py-3 dark:bg-black shadow-sm items-center justify-between">
+    <header className="flex md:px-40 sm:px-20 px-5 py-3 dark:bg-black shadow-sm items-center justify-between">
       <Link to="/">
         <h1 className="dark:text-white font-bold font-logo text-2xl">Plus</h1>
       </Link>
-      <div className="min-w-96 shadow rounded-full dark:bg-neutral-700/40 px-3 flex justify-between items-center py-2 gap-4 ">
-        <Search className="text-gray-400 text-xs" />
-        <input
-          className="bg-transparent dark:text-white dark:placeholder:text-neutral-400 w-full outline-none border-none"
-          placeholder="search article, author or topics..."
-          type="text"
-        />
-      </div>
       <div className="flex items-center justify-center gap-6">
         <button
           onClick={() => dispatch(toggleTheme())}
@@ -43,7 +35,7 @@ const MainNavigation: React.FC = () => {
               sign in
             </Link>
             <Link
-              className="text-white capitalize dark:bg-white bg-black px-4 py-2 rounded-lg dark:text-black"
+              className="text-white capitalize dark:bg-white bg-black px-4 py-2 rounded-full dark:text-black"
               to="/auth/signup"
             >
               get started
