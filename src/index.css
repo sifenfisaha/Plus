@@ -47,4 +47,18 @@ body {
   /* Gradients (optional, if needed) */
   --color-gradient-light: linear-gradient(180deg, #ffffff 0%, #f2f2f2 100%);
   --color-gradient-dark: linear-gradient(180deg, #000000 0%, #1a1a1a 100%);
+  --color-gradient-radial: radial-gradient(
+    circle,
+    rgba(36, 36, 36, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+}
+
+.gradi {
+  background: #242424;
+  background: radial-gradient(
+    circle,
+    rgba(36, 36, 36, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
 }

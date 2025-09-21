@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Moon, Search, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { toggleTheme } from "../features/ui/uiSlice";
 import Menu from "./ui/Menu";
@@ -14,7 +14,7 @@ const MainNavigation: React.FC = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <header className="flex md:px-40 sm:px-20 px-5 py-3 dark:bg-black shadow-sm items-center justify-between">
+    <header className="flex sticky top-0 bg-white/30 backdrop-blur-lg md:px-40 sm:px-20 px-5 py-3 dark:bg-neutral-800/30 z-10 items-center justify-between">
       <Link to="/">
         <h1 className="dark:text-white font-bold font-logo text-2xl">Plus</h1>
       </Link>
