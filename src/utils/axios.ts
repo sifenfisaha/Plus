@@ -8,6 +8,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
+    console.log("API URL:", import.meta.env.VITE_API_URL);
     const state = store.getState();
     const token = state.auth.token;
     if (token) {
