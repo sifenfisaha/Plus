@@ -8,7 +8,7 @@ const Layout: React.FC = () => {
         <BlogList />
       </main>
 
-      <aside className="w-[350px] no-scrollbar overflow-y-auto">
+      <aside className="md:w-[350px] w-full no-scrollbar overflow-y-auto">
         <SideBar />
       </aside>
     </div>
