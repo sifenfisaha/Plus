@@ -13,7 +13,7 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: loginRequest,
     onSuccess: (data) => {
-      navigate("/");
+      navigate("/blogs");
       dispatch(login(data.data));
       dispatch(notifySuccess(data.message));
     },
