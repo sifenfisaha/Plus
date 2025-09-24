@@ -4,6 +4,7 @@ import AuthenticationPage from "../pages/Authentication";
 import RootLayout from "../pages/RootLayout";
 import ProfilePage from "../pages/ProfilePage";
 import ProtectedRoute from "./ProtectedRoute";
+import Feeds from "../pages/Blogs";
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      { path: "blogs", element: <Feeds /> },
     ],
   },
   { path: "/auth/:mode", element: <AuthenticationPage /> },
