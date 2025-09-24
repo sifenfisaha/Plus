@@ -7,6 +7,8 @@ body {
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+  /* breack points */
+  --breakpoint-c: 77rem;
   /* Neutrals for dark mode */
   --font-logo: "Leckerli One", cursive;
   --color-neutral-900: hsl(0, 0%, 0%); /* Pure black */
@@ -61,4 +63,13 @@ body {
     rgba(36, 36, 36, 1) 0%,
     rgba(0, 0, 0, 1) 100%
   );
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, Opera */
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* for IE and Edge */
+  scrollbar-width: none; /* for Firefox */
 }

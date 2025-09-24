@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BookOpen } from "lucide-react";
 import React from "react";
 
 const Footer: React.FC = () => {
@@ -13,14 +13,15 @@ const Footer: React.FC = () => {
       </p>
       <div className="flex items-center justify-center gap-4">
         {" "}
-        <button className="flex dark:bg-white shadow-[0_0_5px_white] bg-black capitalize text-white dark:text-black  px-4 py-2 cursor-pointer rounded-full shadow-white items-center justify-center gap-3">
-          get started free <ArrowRight className="w-5" />
+        <button className="flex dark:bg-white  bg-black capitalize text-white dark:text-black  px-4 py-2 cursor-pointer rounded-full shadow-white items-center justify-center gap-3">
+          Start writing today{" "}
+          <ArrowRight className="w-5 hidden md:inline-block" />
         </button>
-        <button className="flex dark:text-white capitalize px-4 py-2 cursor-pointer rounded-full shadow-white items-center justify-center gap-3">
-          Explore article
+        <button className="flex border-neutral-700/80 border dark:text-white capitalize px-4 py-2 cursor-pointer rounded-full shadow-white items-center justify-center gap-3">
+          <BookOpen className="w-5 hidden md:inline-block" /> brouse content
         </button>
       </div>
-      <p className="text-neutral-400 pt-8">
+      <p className="text-neutral-400 text-center pt-8">
         No credit card required • Free forever • Join 2,400+ writers
       </p>
     </div>
