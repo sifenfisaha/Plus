@@ -1,14 +1,6 @@
-import {
-  ArrowRight,
-  BookOpen,
-  ChartLine,
-  Sparkle,
-  ThumbsUp,
-  User,
-} from "lucide-react";
+import { ArrowRight, BookOpen, ChartLine, Sparkle, User } from "lucide-react";
 import React from "react";
 import StatCard from "./ui/StatCard";
-import Hashtags from "./ui/Hashtags";
 import { Link } from "react-router-dom";
 
 const Hero: React.FC = () => {
@@ -24,11 +16,6 @@ const Hero: React.FC = () => {
         Explore thousands of articles from passionate writers around the world.
         Discover insights, tutorials, and stories that inspire and inform.
       </p>
-      {/* <input
-        type="text"
-        className="md:min-w-xl max-w-2xl w-full bg-neutral-100 border-neutral-200 dark:bg-neutral-700/10 backdrop-blur-lg dark:border-neutral-700 border  outline-none px-5 mb-8 py-3 rounded-full dark:placeholder:text-neutral-400 text-center dark:text-white"
-        placeholder="Search articles, topics, or author"
-      /> */}
       <div className="flex  items-center mb-8 justify-center gap-4">
         <Link
           to={"/auth/singup"}
