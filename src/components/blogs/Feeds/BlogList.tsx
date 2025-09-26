@@ -3,13 +3,18 @@ import { useInfiniteBlogs } from "../../../features/blogs/hooks";
 import FilterNav from "./FilterNav";
 import Blog from "./Blog";
 import BlogSkeleton from "./BlogSkeleton";
+import { useAppSelector } from "../../../app/hooks";
 
 export default function BlogList() {
   const [sortBy, setSortBy] = useState<string>("all");
+  
+  const {query} = useAppSelector(s => s.blog)
+  const {tags }= useAppSelector(s => s.blog)
+  const queryTags =  tags.join(' ') 
+  
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteBlogs(sortBy);
+    useInfiniteBlogs(sortBy, query, queryTags);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
-  console.log(data);
   useEffect(() => {
     if (!loadMoreRef.current) return;
     const observer = new IntersectionObserver(
@@ -40,7 +45,7 @@ export default function BlogList() {
         )}
         {data?.pages.map((page, i) => (
           <div key={i}>
-            {page.blogs.map((blog: any) => (
+            {page.blogs.map((blog: {_id: string}) => (
               <Blog key={blog._id} blog={blog} />
             ))}
           </div>
