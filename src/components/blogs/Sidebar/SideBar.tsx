@@ -30,7 +30,6 @@ const SideBar: React.FC = () => {
   }
 
   const removeTags = (tag: string) => {
-    console.log(tag)
     dispatch(removeTag(tag))
   }
   
