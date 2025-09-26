@@ -16,14 +16,52 @@ import {
 } from "../../../features/blogs/hooks";
 import Tags from "../Feeds/Tags";
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { addTag, removeTag } from "../../../features/blogs/blogSlice";
 
 const SideBar: React.FC = () => {
   const { data, isLoading } = useInfiniteBlogs("trending");
   const { data: res, isLoading: tagsLoading } = usePopularTags();
-  console.log(res);
+  const {tags} = useAppSelector(s => s.blog)
+  const dispatch = useAppDispatch()
+  
+  const addTags = (tag: string) => {
+   dispatch(addTag(tag))
+  }
+
+  const removeTags = (tag: string) => {
+    dispatch(removeTag(tag))
+  }
+  
 
   return (
     <div className="space-y-6 mt-3">
+      <div className="p-6 flex flex-wrap gap-3">
+        {tags.map((tag:  string, i: number) => (
+              <button key={i} onClick={() => removeTags(tag)}><Tags key={i} tag={tag} /></button>
+            ))}
+      </div>
+       <div className="w-full p-6 border dark:border-neutral-700 rounded-lg border-neutral-700/20">
+        <h2 className="text-lg flex gap-2 items-center justify-start dark:text-white">
+          <Star className="inline-block w-4" /> <span>Popular Tags</span>
+        </h2>
+        {tagsLoading ? (
+          <ul className="flex flex-wrap gap-4 items-center justify-center pt-6">
+            {[...Array(6)].map((_, i) => (
+              <li
+                key={i}
+                className="h-6 w-16 rounded-full bg-neutral-300 dark:bg-neutral-700 animate-pulse"
+              ></li>
+            ))}
+          </ul>
+        ) : (
+          <ul className="flex flex-wrap gap-4 items-center justify-center pt-6">
+            {res?.tags.map((tag: {tag: string}, i: number) => (
+              <button key={i} onClick={() => addTags(tag.tag)}><Tags key={i} tag={tag.tag} /></button>
+            ))}
+          </ul>
+        )}
+      </div>
       <div className="w-full p-6 border dark:border-neutral-700 rounded-lg border-neutral-700/20">
         <h2 className="text-lg flex gap-2 items-center justify-start dark:text-white">
           <TrendingUp className="inline-block w-4" />
@@ -52,7 +90,7 @@ const SideBar: React.FC = () => {
           <ul className="pt-6">
             {data?.pages.map((page, i) => (
               <div key={i}>
-                {page.blogs.map((blog: any, i: number) => {
+                {page.blogs.map((blog: {title: string, author: {first_name: string, last_name: string}, likes: string}, i: number) => {
                   if (i < 4) {
                     return (
                       <li
@@ -76,27 +114,7 @@ const SideBar: React.FC = () => {
           </ul>
         )}
       </div>
-      <div className="w-full p-6 border dark:border-neutral-700 rounded-lg border-neutral-700/20">
-        <h2 className="text-lg flex gap-2 items-center justify-start dark:text-white">
-          <Star className="inline-block w-4" /> <span>Popular Tags</span>
-        </h2>
-        {tagsLoading ? (
-          <ul className="flex flex-wrap gap-4 items-center justify-center pt-6">
-            {[...Array(6)].map((_, i) => (
-              <li
-                key={i}
-                className="h-6 w-16 rounded-full bg-neutral-300 dark:bg-neutral-700 animate-pulse"
-              ></li>
-            ))}
-          </ul>
-        ) : (
-          <ul className="flex flex-wrap gap-4 items-center justify-center pt-6">
-            {res?.tags.map((tag: any) => (
-              <Tags tag={tag.tag} />
-            ))}
-          </ul>
-        )}
-      </div>
+     
       <div className="w-full p-6 border dark:border-neutral-700 rounded-lg border-neutral-700/20">
         <h2 className="text-lg flex gap-2 items-center justify-start dark:text-white">
           <Code className="inline-block w-4" /> <span>Built with</span>{" "}

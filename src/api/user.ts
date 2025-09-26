@@ -13,6 +13,5 @@ export const updateUser = async (updatedData: ProfileInput) => {
 
 export const deleteuser = async () => {
   const res = await api.delete("/user/me");
-  console.log(res.data);
   return res.data;
 };
