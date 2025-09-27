@@ -7,11 +7,11 @@ import { useAppSelector } from "../../../app/hooks";
 
 export default function BlogList() {
   const [sortBy, setSortBy] = useState<string>("all");
-  
-  const {query} = useAppSelector(s => s.blog)
-  const {tags }= useAppSelector(s => s.blog)
-  const queryTags =  tags.join(' ') 
-  
+
+  const { query } = useAppSelector((s) => s.blog);
+  const { tags } = useAppSelector((s) => s.blog);
+  const queryTags = tags.join(" ");
+
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteBlogs(sortBy, query, queryTags);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
@@ -45,7 +45,7 @@ export default function BlogList() {
         )}
         {data?.pages.map((page, i) => (
           <div key={i}>
-            {page.blogs.map((blog: {_id: string}) => (
+            {page.blogs.map((blog: { _id: string }) => (
               <Blog key={blog._id} blog={blog} />
             ))}
           </div>
