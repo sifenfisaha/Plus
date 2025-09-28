@@ -6,8 +6,8 @@ import { logout } from "../auth/authSlice";
 import { notifyError, notifySuccess } from "../ui/uiSlice";
 import { useNavigate } from "react-router-dom";
 
-export const useUser = () => {
-  return useQuery({ queryKey: ["user"], queryFn: fetchUser });
+export const useUser = (id: string) => {
+  return useQuery({ queryKey: ["user", id], queryFn: fetchUser });
 };
 
 export const useUpdateUser = () => {

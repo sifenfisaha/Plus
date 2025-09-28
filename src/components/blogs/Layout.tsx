@@ -3,12 +3,12 @@ import SideBar from "./Sidebar/SideBar";
 
 const Layout: React.FC = () => {
   return (
-    <div className="md:px-40 px-10 c:h-[calc(100vh-80px)] flex flex-col c:flex-row gap-15">
+    <div className="md:px-40 px-10 h-[2000px] c:h-[calc(100vh-80px)] flex flex-col c:flex-row gap-15">
       <main className="flex-1 no-scrollbar overflow-y-auto">
         <BlogList />
       </main>
 
-      <aside className="md:w-[350px] w-full no-scrollbar overflow-y-auto">
+      <aside className="c:w-[350px] w-full no-scrollbar overflow-y-auto">
         <SideBar />
       </aside>
     </div>

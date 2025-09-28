@@ -2,7 +2,7 @@ import React from "react";
 
 const BlogSkeleton: React.FC = () => {
   return (
-    <div className="border z-5 w-full dark:border-neutral-700 mb-8 p-4 md:p-6 rounded-lg border-neutral-200 animate-pulse">
+    <div className="border z-5 w-full dark:border-neutral-700 mb-8 p-4 md:p-6 md:mt-2 rounded-lg border-neutral-200 animate-pulse">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex gap-4 items-center">

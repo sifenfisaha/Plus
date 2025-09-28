@@ -16,51 +16,60 @@ const MainNavigation: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const dispatch = useAppDispatch();
-  const location = useLocation() 
-  const naviate = useNavigate()
+  const location = useLocation();
+  const naviate = useNavigate();
 
-  const showSearch = location.pathname === '/blogs'
+  const showSearch = location.pathname === "/blogs";
 
-  
+  const { register, handleSubmit, reset } = useForm<searchInput>({
+    resolver: zodResolver(searchSchema),
+  });
 
-  const {register, handleSubmit, reset} = useForm<searchInput>({
-    resolver: zodResolver(searchSchema)
-  })
-
-    const onSubmit = (data: searchInput) =>  {
-      if(data.query === ''){
-        naviate(`/blogs`)
-      } else {naviate(`/blogs?search=${encodeURIComponent(data.query)}`)}
-      dispatch(setQuery(data.query))
-      
+  const onSubmit = (data: searchInput) => {
+    if (data.query === "") {
+      naviate(`/blogs`);
+    } else {
+      naviate(`/blogs?search=${encodeURIComponent(data.query)}`);
     }
+    dispatch(setQuery(data.query));
+  };
 
-    const onClick = () => {
-      naviate('/blogs')
-      reset()
-      dispatch(setQuery(''))
-    }
-
+  const onClick = () => {
+    naviate("/blogs");
+    reset();
+    dispatch(setQuery(""));
+  };
 
   return (
-    <header className="flex sticky top-0 bg-white/30 backdrop-blur-lg md:px-40 sm:px-20 px-5 py-5 dark:bg-neutral-800/30 z-10 items-center justify-between">
+    <header className="flex gap-3  sticky top-0 bg-white/30 backdrop-blur-lg md:px-40 sm:px-20 px-5 py-5 dark:bg-neutral-800/30 z-100 items-center justify-between">
       <Link to="/">
         <h1 className="dark:text-white font-bold font-logo text-2xl">Plus</h1>
       </Link>
-     {showSearch &&  <div className="min-w-96 shadow rounded-full dark:bg-neutral-700/40 px-3 flex justify-between items-center py-2 gap-4 ">
-     <form className="items-center flex gap-3 justify-between w-full" onSubmit={handleSubmit(onSubmit)}> 
-        <Search className="text-neutral-400 w-5" />
-        <input autoComplete="off"
-        {...register('query')}
-          className="bg-transparent dark:text-white dark:placeholder:text-neutral-700 w-full outline-none border-none"
-          placeholder="search article, author or topics..."
-          type="text"
-        />
-        <X onClick={onClick} className="w-5 cursor-pointer text-neutral-400" />
-      </form>
-      </div>
-     
-      }
+      {showSearch && (
+        <div
+          className={`max-w-96 w-full  rounded-full dark:bg-neutral-700/20 border md:border-neutral-700/40 border-neutral-50/10 px-3 flex justify-between items-center py-2 gap-4 ${
+            isAuthenticated ? "" : "hidden md:flex"
+          } `}
+        >
+          <form
+            className="items-center flex gap-3 justify-between w-full"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <Search className="text-neutral-400 w-5" />
+            <input
+              autoComplete="off"
+              {...register("query")}
+              className="bg-transparent  dark:text-white dark:placeholder:text-neutral-700 w-full outline-none border-none"
+              placeholder="search article, author or topics..."
+              type="text"
+            />
+            <X
+              onClick={onClick}
+              className="w-5 cursor-pointer text-neutral-400"
+            />
+          </form>
+        </div>
+      )}
       <div className="flex items-center justify-center gap-6">
         <button
           onClick={() => dispatch(toggleTheme())}
