@@ -5,12 +5,21 @@ import Blog from "./Blog";
 import BlogSkeleton from "./BlogSkeleton";
 import { useAppSelector } from "../../../app/hooks";
 
+import type { IBlog } from "../../../types/types";
+
 export default function BlogList() {
   const [sortBy, setSortBy] = useState<string>("all");
 
   const { query } = useAppSelector((s) => s.blog);
   const { tags } = useAppSelector((s) => s.blog);
   const queryTags = tags.join(" ");
+
+  useEffect(() => {
+    const top = document.getElementById("top");
+    if (top) {
+      top.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [sortBy, query, tags]);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteBlogs(sortBy, query, queryTags);
@@ -30,7 +39,7 @@ export default function BlogList() {
   }, [hasNextPage, fetchNextPage]);
 
   return (
-    <div className="flex-1">
+    <div className="flex-1" id="top">
       <FilterNav onClick={setSortBy} />
       <div
         className="
@@ -45,7 +54,7 @@ export default function BlogList() {
         )}
         {data?.pages.map((page, i) => (
           <div key={i}>
-            {page.blogs.map((blog: { _id: string }) => (
+            {page.blogs.map((blog: IBlog) => (
               <Blog key={blog._id} blog={blog} />
             ))}
           </div>

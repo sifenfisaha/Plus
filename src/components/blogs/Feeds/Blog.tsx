@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import {
   Bookmark,
   Clock,
@@ -8,12 +8,23 @@ import {
   Share2,
 } from "lucide-react";
 import Tags from "./Tags";
+import { Link } from "react-router-dom";
+import { useAppSelector } from "../../../app/hooks";
+import {
+  useToggleBookmark,
+  useToggleLike,
+} from "../../../features/blogs/hooks";
+import type { IBlog } from "../../../types/types";
+import { useUser } from "../../../features/profile/hooks";
 
 interface Props {
-  blog: any;
+  blog: IBlog;
 }
 
 const Blog: React.FC<Props> = ({ blog }) => {
+  // console.log(blog);
+  const { user } = useAppSelector((s) => s.auth);
+  const liked = blog.likedBy.includes(user?.id || "nolike");
   const date = new Date(blog.createdAt);
 
   const months = [
@@ -36,6 +47,25 @@ const Blog: React.FC<Props> = ({ blog }) => {
   // const year = date.getUTCFullYear();
 
   const createat = `${month} ${day.toString().padStart(2, "0")}`;
+
+  // const toggleLike = async () => {
+  //   console.log("clicked");
+  //   console.log("like", like);
+  //   await likeBlog(blog._id);
+  //   setLike(!like);
+  // };
+  const state = useAppSelector((s) => s.auth);
+  const toggleLike = useToggleLike(state.user?.id || "");
+
+  const { data: stateUser } = useUser(state.user?.id);
+
+  const toggleBookmark = useToggleBookmark(user?.id);
+
+  const bookmarked = stateUser?.user?.bookmarks?.includes(blog._id) ?? false;
+
+  const handleToggle = () => {
+    toggleBookmark.mutate(blog._id);
+  };
 
   return (
     <div className="border dark:border-neutral-700 mb-6 mt-2 p-4 md:p-6 rounded-lg border-neutral-200">
@@ -62,9 +92,11 @@ const Blog: React.FC<Props> = ({ blog }) => {
         </div>
       </div>
       <div>
-        <h2 className="text-xl py-5 dark:text-white font-semibold">
-          {blog.title}
-        </h2>
+        <Link to={`/blogs/${blog._id}`}>
+          <h2 className="text-xl py-5 dark:text-white font-semibold">
+            {blog.title}
+          </h2>
+        </Link>
         <h3 className="text-neutral-500 pb-6 dark:text-neutral-300">
           {blog.description}
         </h3>
@@ -77,20 +109,41 @@ const Blog: React.FC<Props> = ({ blog }) => {
       <div className="pt-5 flex items-center justify-between">
         <div>
           <div className="flex items-center justify-start w-fit gap-4">
-            <button className="flex dark:text-neutral-400 gap-2 items-center">
-              <Heart className="w-4" />
+            <button
+              onClick={() => toggleLike.mutate(blog._id)}
+              className={`flex ${
+                liked
+                  ? "text-red-500 dark:text-red-500"
+                  : "dark:text-neutral-400"
+              } gap-2 items-center justify-center rounded-lg`}
+            >
+              <Heart className={`w-4 ${liked ? "fill-red-500" : ""}`} />
               <span>{blog.likes}</span>
             </button>
+            <Link
+              to={blog._id}
+              className="flex gap-2 dark:text-neutral-400  items-center"
+            >
+              <MessageCircle className="w-4" />{" "}
+              <span>{blog.comments.length}</span>
+            </Link>
             <div className="flex gap-2 dark:text-neutral-400  items-center">
-              <MessageCircle className="w-4" /> <span>23</span>
-            </div>
-            <div className="flex gap-2 dark:text-neutral-400  items-center">
-              <LucideEye className="w-4" /> <span>{blog.reading_time}</span>
+              <LucideEye className="w-4" /> <span>{blog.read_count}</span>
             </div>
           </div>
         </div>
         <div className="flex gap-2 dark:text-neutral-400  items-center">
-          <Bookmark className="w-4" />
+          <button
+            className={`${bookmarked ? "text-black dark:text-white" : ""}`}
+            onClick={handleToggle}
+            disabled={toggleBookmark.isPending}
+          >
+            <Bookmark
+              className={`w-4 ${
+                bookmarked ? "dark:fill-white fill-black" : ""
+              }`}
+            />
+          </button>
         </div>
       </div>
     </div>
