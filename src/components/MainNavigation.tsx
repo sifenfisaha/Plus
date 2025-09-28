@@ -41,13 +41,13 @@ const MainNavigation: React.FC = () => {
   };
 
   return (
-    <header className="flex gap-3 sticky top-0 bg-white/30 backdrop-blur-lg md:px-40 sm:px-20 px-5 py-5 dark:bg-neutral-800/30 z-10 items-center justify-between">
+    <header className="flex gap-3  sticky top-0 bg-white/30 backdrop-blur-lg md:px-40 sm:px-20 px-5 py-5 dark:bg-neutral-800/30 z-100 items-center justify-between">
       <Link to="/">
         <h1 className="dark:text-white font-bold font-logo text-2xl">Plus</h1>
       </Link>
       {showSearch && (
         <div
-          className={`max-w-96 w-full shadow rounded-full dark:bg-neutral-700/40 px-3 flex justify-between items-center py-2 gap-4 ${
+          className={`max-w-96 w-full  rounded-full dark:bg-neutral-700/20 border md:border-neutral-700/40 border-neutral-50/10 px-3 flex justify-between items-center py-2 gap-4 ${
             isAuthenticated ? "" : "hidden md:flex"
           } `}
         >
@@ -59,7 +59,7 @@ const MainNavigation: React.FC = () => {
             <input
               autoComplete="off"
               {...register("query")}
-              className="bg-transparent dark:text-white dark:placeholder:text-neutral-700 w-full outline-none border-none"
+              className="bg-transparent  dark:text-white dark:placeholder:text-neutral-700 w-full outline-none border-none"
               placeholder="search article, author or topics..."
               type="text"
             />

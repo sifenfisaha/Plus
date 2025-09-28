@@ -9,12 +9,13 @@ import { Save, TrashIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { type ProfileInput, profileSchem } from "../../utils/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { updateProfile } from "../../features/auth/authSlice";
 
 const Layout: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { data, isPending: userPending } = useUser();
+  const state = useAppSelector((s) => s.auth);
+  const { data, isPending: userPending } = useUser(state.user!.id!);
   const user = data?.user;
   const memberSince = user
     ? new Date(user.createdAt).toLocaleDateString("en-US", {
@@ -123,7 +124,11 @@ const Layout: React.FC = () => {
           <button
             type="submit"
             disabled={!isDirty || updatePending}
-            className={`px-4 py-2 ${!isDirty || updatePending ? "cursor-not-allowed" : "cursor-pointer"}  bg-black dark:bg-white  dark:text-black flex items-center gap-2 text-white rounded-sm disabled:opacity-50`}
+            className={`px-4 py-2 ${
+              !isDirty || updatePending
+                ? "cursor-not-allowed"
+                : "cursor-pointer"
+            }  bg-black dark:bg-white  dark:text-black flex items-center gap-2 text-white rounded-sm disabled:opacity-50`}
           >
             <Save className="text-shadow-gradient-light w-5" />
             {updatePending ? "Saving..." : "Save Changes"}
