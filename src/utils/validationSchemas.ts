@@ -3,7 +3,8 @@ import z from "zod";
 export type LoginInput = z.infer<typeof loginSchema>;
 export type SignupInput = z.infer<typeof signupSchema>;
 export type ProfileInput = z.infer<typeof profileSchem>;
-export type searchInput = z.infer<typeof searchSchema >
+export type searchInput = z.infer<typeof searchSchema>;
+export type commentInput = z.infer<typeof commentSchema>;
 
 export const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -24,5 +25,9 @@ export const profileSchem = z.object({
 });
 
 export const searchSchema = z.object({
-  query: z.string()
-})
+  query: z.string(),
+});
+
+export const commentSchema = z.object({
+  content: z.string(),
+});
