@@ -12,7 +12,6 @@ import type { IBlog } from "../../types/types";
 import { useAppDispatch } from "../../app/hooks";
 import type { AxiosError } from "axios";
 import { notifyError, notifySuccess } from "../ui/uiSlice";
-import type { commentInput } from "../../utils/validationSchemas";
 
 export const useInfiniteBlogs = (
   filter: string,
@@ -137,7 +136,7 @@ export const useToggleBookmark = (userId: string) => {
       }
     },
 
-    onError: (err: AxiosError, blogId, ctx) => {
+    onError: (err: AxiosError, _blogId, ctx) => {
       if (err.status === 401 && err.response?.data) {
         dispatch(notifyError("Please login first"));
       }

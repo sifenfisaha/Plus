@@ -1,4 +1,3 @@
-import React, { useMemo, useState } from "react";
 import {
   Bookmark,
   Clock,
@@ -57,9 +56,9 @@ const Blog: React.FC<Props> = ({ blog }) => {
   const state = useAppSelector((s) => s.auth);
   const toggleLike = useToggleLike(state.user?.id || "");
 
-  const { data: stateUser } = useUser(state.user?.id);
+  const { data: stateUser } = useUser(state.user?.id || "");
 
-  const toggleBookmark = useToggleBookmark(user?.id);
+  const toggleBookmark = useToggleBookmark(user?.id || "");
 
   const bookmarked = stateUser?.user?.bookmarks?.includes(blog._id) ?? false;
 
