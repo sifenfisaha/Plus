@@ -18,30 +18,32 @@ import Tags from "../Feeds/Tags";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { addTag, removeTag } from "../../../features/blogs/blogSlice";
+import type { IBlog } from "../../../types/types";
 
 const SideBar: React.FC = () => {
   const { data, isLoading } = useInfiniteBlogs("trending");
   const { data: res, isLoading: tagsLoading } = usePopularTags();
-  const {tags} = useAppSelector(s => s.blog)
-  const dispatch = useAppDispatch()
-  
+  const { tags } = useAppSelector((s) => s.blog);
+  const dispatch = useAppDispatch();
+
   const addTags = (tag: string) => {
-   dispatch(addTag(tag))
-  }
+    dispatch(addTag(tag));
+  };
 
   const removeTags = (tag: string) => {
-    dispatch(removeTag(tag))
-  }
-  
+    dispatch(removeTag(tag));
+  };
 
   return (
     <div className="space-y-6 mt-3">
       <div className="p-6 flex flex-wrap gap-3">
-        {tags.map((tag:  string, i: number) => (
-              <button key={i} onClick={() => removeTags(tag)}><Tags key={i} tag={tag} /></button>
-            ))}
+        {tags.map((tag: string, i: number) => (
+          <button key={i} onClick={() => removeTags(tag)}>
+            <Tags key={i} tag={tag} />
+          </button>
+        ))}
       </div>
-       <div className="w-full p-6 border dark:border-neutral-700 rounded-lg border-neutral-700/20">
+      <div className="w-full p-6 border dark:border-neutral-700 rounded-lg border-neutral-700/20">
         <h2 className="text-lg flex gap-2 items-center justify-start dark:text-white">
           <Star className="inline-block w-4" /> <span>Popular Tags</span>
         </h2>
@@ -56,8 +58,10 @@ const SideBar: React.FC = () => {
           </ul>
         ) : (
           <ul className="flex flex-wrap gap-4 items-center justify-center pt-6">
-            {res?.tags.map((tag: {tag: string}, i: number) => (
-              <button key={i} onClick={() => addTags(tag.tag)}><Tags key={i} tag={tag.tag} /></button>
+            {res?.tags.map((tag: { tag: string }, i: number) => (
+              <button key={i} onClick={() => addTags(tag.tag)}>
+                <Tags key={i} tag={tag.tag} />
+              </button>
             ))}
           </ul>
         )}
@@ -90,14 +94,20 @@ const SideBar: React.FC = () => {
           <ul className="pt-6">
             {data?.pages.map((page, i) => (
               <div key={i}>
-                {page.blogs.map((blog: {title: string, author: {first_name: string, last_name: string}, likes: string}, i: number) => {
+                {page.blogs.map((blog: IBlog, i: number) => {
                   if (i < 4) {
                     return (
                       <li
-                        className={` ${i === 3 ? "" : "mb-4 pb-3 border-b  border-neutral-200 dark:border-neutral-700"} `}
+                        className={` ${
+                          i === 3
+                            ? ""
+                            : "mb-4 pb-3 border-b  border-neutral-200 dark:border-neutral-700"
+                        } `}
                         key={i}
                       >
-                        <h3 className="dark:text-white">{blog.title}</h3>
+                        <Link to={blog._id}>
+                          <h3 className="dark:text-white">{blog.title}</h3>
+                        </Link>
                         <div className="dark:text-neutral-400 gap-2 text-neutral-600 flex items-center justify-start">
                           <div className="text-sm capitalize">
                             {`${blog.author.first_name} ${blog.author.last_name}`}
@@ -114,7 +124,7 @@ const SideBar: React.FC = () => {
           </ul>
         )}
       </div>
-     
+
       <div className="w-full p-6 border dark:border-neutral-700 rounded-lg border-neutral-700/20">
         <h2 className="text-lg flex gap-2 items-center justify-start dark:text-white">
           <Code className="inline-block w-4" /> <span>Built with</span>{" "}
