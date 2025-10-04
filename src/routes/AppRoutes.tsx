@@ -8,6 +8,7 @@ import Feeds from "../pages/Blogs";
 import BlogDetails from "../pages/BlogDetails";
 import BlogPost from "../pages/BlogPost";
 import EditBlog from "../pages/EditBlog";
+import Dashboard from "../pages/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,14 @@ export const router = createBrowserRouter([
         ),
       },
       { path: "edit/:id", element: <EditBlog /> },
+      {
+        path: "dashboard",
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
   { path: "/auth/:mode", element: <AuthenticationPage /> },

@@ -57,7 +57,7 @@ const Menu: React.FC<Props> = ({ onClose }) => {
             <Link
               onClick={onClose}
               className="capitalize text-base dark:text-white"
-              to={"/"}
+              to={"/dashboard"}
             >
               dashboard
             </Link>
