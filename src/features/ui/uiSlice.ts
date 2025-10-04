@@ -9,7 +9,7 @@ interface UiState {
   sidebar: boolean;
 }
 
-const storedTheme = (loadFromStorage("theme") as "light" | "dark") || "light";
+const storedTheme = (loadFromStorage("theme") as "light" | "dark") || "dark";
 
 const initialState: UiState = {
   theme: storedTheme,
