@@ -52,7 +52,7 @@ const Blog: React.FC<Props> = ({ blog }) => {
           // relative="path"
         >
           <ArrowLeft className="w-5" />
-          <span>Back to blogs</span>
+          <span className="hidden md:inline-block">Back to blogs</span>
         </Link>
         <div className="flex gap-4 items-center justify-center">
           <button className="flex gap-3 p-2 px-3 border border-neutral-100 hover:bg-neutral-50 duration-200 transition-all ease-in-out rounded-lg dark:text-white dark:border-neutral-700/60 hover:dark:bg-neutral-700/20 cursor-pointer items-center justify-center w-fit">
