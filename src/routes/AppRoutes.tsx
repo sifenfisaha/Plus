@@ -6,6 +6,8 @@ import ProfilePage from "../pages/ProfilePage";
 import ProtectedRoute from "./ProtectedRoute";
 import Feeds from "../pages/Blogs";
 import BlogDetails from "../pages/BlogDetails";
+import BlogPost from "../pages/BlogPost";
+import EditBlog from "../pages/EditBlog";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +25,15 @@ export const router = createBrowserRouter([
       },
       { path: "blogs", element: <Feeds /> },
       { path: "blogs/:id", element: <BlogDetails /> },
+      {
+        path: "new",
+        element: (
+          <ProtectedRoute>
+            <BlogPost />
+          </ProtectedRoute>
+        ),
+      },
+      { path: "edit/:id", element: <EditBlog /> },
     ],
   },
   { path: "/auth/:mode", element: <AuthenticationPage /> },

@@ -2,6 +2,7 @@ import {
   ArrowLeft,
   Bookmark,
   Clock,
+  Edit,
   Eye,
   Heart,
   MessageCircle,
@@ -20,6 +21,9 @@ import { useUser } from "../../../features/profile/hooks";
 import { formatData } from "../../../utils/data";
 import Comment from "./Comment";
 import CommentInput from "./CommentInput";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
 
 interface Props {
   blog: IBlog;
@@ -50,10 +54,21 @@ const Blog: React.FC<Props> = ({ blog }) => {
           <ArrowLeft className="w-5" />
           <span>Back to blogs</span>
         </Link>
-        <button className="flex gap-3 p-2 px-3 border border-neutral-100 hover:bg-neutral-50 duration-200 transition-all ease-in-out rounded-lg dark:text-white dark:border-neutral-700/60 hover:dark:bg-neutral-700/20 cursor-pointer items-center justify-center w-fit">
-          <Share2 className="w-5" />
-          <span>share</span>
-        </button>
+        <div className="flex gap-4 items-center justify-center">
+          <button className="flex gap-3 p-2 px-3 border border-neutral-100 hover:bg-neutral-50 duration-200 transition-all ease-in-out rounded-lg dark:text-white dark:border-neutral-700/60 hover:dark:bg-neutral-700/20 cursor-pointer items-center justify-center w-fit">
+            <Share2 className="w-5" />
+            <span>share</span>
+          </button>
+          {blog.author._id === user?.id && (
+            <Link
+              to={`/edit/${blog._id}`}
+              className="flex gap-3 p-2 px-3 border border-neutral-100 hover:bg-neutral-50 duration-200 transition-all ease-in-out rounded-lg dark:text-white dark:border-neutral-700/60 hover:dark:bg-neutral-700/20 cursor-pointer items-center justify-center w-fit"
+            >
+              <Edit className="w-5" />
+              <span>Edit</span>
+            </Link>
+          )}
+        </div>
       </div>
       <div className="py-8 dark:text-white">
         <h1 className="font-bold text-3xl md:text-6xl">{blog.title}</h1>
@@ -134,7 +149,16 @@ const Blog: React.FC<Props> = ({ blog }) => {
           <p className="dark:text-neutral-400 text-xl py-2">
             {blog.description}
           </p>
-          <p className="dark:text-neutral-100">{blog.body}</p>
+          {/* <p className="dark:text-neutral-100">{blog.body}</p> */}
+          {/* TODO : making the markdown work */}
+          <article className="dark:text-white  max-w-none break-words1  ">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeHighlight]}
+            >
+              {blog.body}
+            </ReactMarkdown>
+          </article>
         </div>
         {/* comments */}
         <div className="dark:text-white py-8">

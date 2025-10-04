@@ -70,7 +70,7 @@ const Menu: React.FC<Props> = ({ onClose }) => {
             <Link
               onClick={onClose}
               className="capitalize text-base dark:text-white"
-              to={"/"}
+              to={"/new"}
             >
               write Article
             </Link>

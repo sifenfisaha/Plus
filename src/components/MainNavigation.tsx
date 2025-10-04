@@ -104,7 +104,15 @@ const MainNavigation: React.FC = () => {
               {user?.first_name[0]}
             </button>
             <AnimatePresence>
-              {isOpen && <Menu onClose={() => setIsOpen(false)} />}
+              {isOpen && (
+                <>
+                  <div
+                    className="fixed inset-0 bg-white/70 dark:bg-black/50 z-40"
+                    onClick={() => setIsOpen(false)}
+                  ></div>
+                  <Menu onClose={() => setIsOpen(false)} />
+                </>
+              )}
             </AnimatePresence>
           </div>
         )}
