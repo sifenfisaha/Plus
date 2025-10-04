@@ -5,6 +5,7 @@ export type SignupInput = z.infer<typeof signupSchema>;
 export type ProfileInput = z.infer<typeof profileSchem>;
 export type searchInput = z.infer<typeof searchSchema>;
 export type commentInput = z.infer<typeof commentSchema>;
+export type blogInput = z.infer<typeof blogSchema>;
 
 export const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -30,4 +31,14 @@ export const searchSchema = z.object({
 
 export const commentSchema = z.object({
   content: z.string(),
+});
+
+export const blogSchema = z.object({
+  title: z.string().min(3, { message: "Title must be at least 3 characters" }),
+  description: z
+    .string()
+    .min(3, { message: "Description must be at least 3 characters" }),
+  body: z.string().min(10, { message: "Body must be at least 10 characters" }),
+  tags: z.array(z.string().min(1, { message: "tags must be at least 1" })),
+  state: z.enum(["draft", "published"]).optional(),
 });
