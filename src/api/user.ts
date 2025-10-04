@@ -1,5 +1,5 @@
 import api from "../utils/axios";
-import type { ProfileInput } from "../utils/validationSchemas";
+import type { passwordInput, ProfileInput } from "../utils/validationSchemas";
 
 export const fetchUser = async () => {
   const res = await api.get("/user/me");
@@ -13,5 +13,10 @@ export const updateUser = async (updatedData: ProfileInput) => {
 
 export const deleteuser = async () => {
   const res = await api.delete("/user/me");
+  return res.data;
+};
+
+export const updatePassword = async (data: passwordInput) => {
+  const res = await api.put("/user/me", data);
   return res.data;
 };
