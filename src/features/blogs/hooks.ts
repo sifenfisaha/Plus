@@ -44,6 +44,7 @@ export const useBlog = (id: string) =>
 
 export const useToggleLike = (userId: string) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   return useMutation({
     mutationFn: (id: string) => likeBlog(id),
     onMutate: async (id: string) => {
@@ -95,6 +96,7 @@ export const useToggleLike = (userId: string) => {
       console.log(userId);
       if (_err.status === 401 && _err.response?.data) {
         dispatch(notifyError("Please login first"));
+        navigate("/auth/signin");
       }
       console.log(_err);
       if (ctx?.prevInfinite)
@@ -115,6 +117,7 @@ export const useToggleLike = (userId: string) => {
 
 export const useToggleBookmark = (userId: string) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   return useMutation({
     mutationFn: (id: string) => bookmarkBlog(id),
@@ -144,6 +147,7 @@ export const useToggleBookmark = (userId: string) => {
     onError: (err: AxiosError, _blogId, ctx) => {
       if (err.status === 401 && err.response?.data) {
         dispatch(notifyError("Please login first"));
+        navigate("/auth/signin");
       }
       if (ctx?.user) {
         queryClient.setQueryData(["user", userId], ctx);
