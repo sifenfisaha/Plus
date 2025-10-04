@@ -2,12 +2,18 @@ import React, { useEffect } from "react";
 import Input from "../ui/Input";
 import {
   useDeleteUser,
+  useUpdatePassword,
   useUpdateUser,
   useUser,
 } from "../../features/profile/hooks";
 import { Save, TrashIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { type ProfileInput, profileSchem } from "../../utils/validationSchemas";
+import {
+  type passwordInput,
+  passwordUpdateSchema,
+  type ProfileInput,
+  profileSchem,
+} from "../../utils/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { updateProfile } from "../../features/auth/authSlice";
@@ -40,6 +46,16 @@ const Layout: React.FC = () => {
     },
   });
 
+  const {
+    register: passwordRegister,
+    handleSubmit: handlePassword,
+    formState: { errors: passwordError },
+    reset: passwordInputReset,
+  } = useForm<passwordInput>({
+    resolver: zodResolver(passwordUpdateSchema),
+  });
+  const { mutate, isPending } = useUpdatePassword();
+
   useEffect(() => {
     if (user) {
       reset({
@@ -63,6 +79,10 @@ const Layout: React.FC = () => {
     );
   };
 
+  const passwordSubmitHandler = (data: passwordInput) => {
+    mutate(data, { onSuccess: () => passwordInputReset() });
+  };
+
   if (userPending) {
     return <p>Loading...</p>;
   }
@@ -73,7 +93,6 @@ const Layout: React.FC = () => {
       <p className="text-neutral-500">
         Manage your account settings and preferences.
       </p>
-
       <div className="p-4 mt-8 border border-neutral-300 dark:border-neutral-700 rounded-xl">
         <h2 className="text-xl dark:text-white">Profile Information</h2>
         <p className="text-neutral-500">
@@ -135,6 +154,51 @@ const Layout: React.FC = () => {
           </button>
         </form>
       </div>
+      <div className="p-4 mt-8 border border-neutral-300 dark:border-neutral-700 rounded-xl">
+        <h2 className="text-xl dark:text-white">Update Password</h2>
+        <p className="text-neutral-500">
+          Change your current password to keep your account secure.
+        </p>
+        <form onSubmit={handlePassword(passwordSubmitHandler)}>
+          <div>
+            <Input
+              label="New Password"
+              {...passwordRegister("password")}
+              placeholder="password"
+              type="password"
+            />
+            {errors.email && (
+              <p className="text-sm text-red-500 mt-1">
+                {passwordError.password?.message as string}
+              </p>
+            )}
+          </div>
+          <div>
+            <Input
+              label="Confirm Password"
+              {...passwordRegister("confirmPassword")}
+              placeholder="confirm password"
+              type="password"
+            />
+            {errors.email && (
+              <p className="text-sm text-red-500 mt-1">
+                {passwordError.confirmPassword?.message as string}
+              </p>
+            )}
+          </div>
+          <button
+            type="submit"
+            disabled={isPending}
+            className={`px-4 py-2 ${
+              isPending ? "cursor-not-allowed" : "cursor-pointer"
+            }  bg-black dark:bg-white mt-4 dark:text-black flex items-center gap-2 text-white rounded-sm disabled:opacity-50`}
+          >
+            <Save className="text-shadow-gradient-light w-5" />
+            {isPending ? "updating..." : "update"}
+          </button>
+        </form>
+      </div>
+
       <div className="p-4 mt-8 border border-neutral-300 dark:border-neutral-700  rounded-xl">
         <h2 className="text-xl dark:text-white">Account Information</h2>
         <p className="text-neutral-500">
@@ -155,7 +219,6 @@ const Layout: React.FC = () => {
           </p>
         </div>
       </div>
-
       <div className="p-4 border-[1px] border-red-600 my-7 rounded-2xl">
         <h1 className="text-xl text-red-500 dark:text-white">Danger Zone</h1>
         <p className="text-neutral-500">

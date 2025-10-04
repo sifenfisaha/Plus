@@ -6,6 +6,7 @@ export type ProfileInput = z.infer<typeof profileSchem>;
 export type searchInput = z.infer<typeof searchSchema>;
 export type commentInput = z.infer<typeof commentSchema>;
 export type blogInput = z.infer<typeof blogSchema>;
+export type passwordInput = z.infer<typeof passwordUpdateSchema>;
 
 export const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -42,3 +43,15 @@ export const blogSchema = z.object({
   tags: z.array(z.string().min(1, { message: "tags must be at least 1" })),
   state: z.enum(["draft", "published"]).optional(),
 });
+
+export const passwordUpdateSchema = z
+  .object({
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z
+      .string()
+      .min(6, "Confirm password must be at least 6 characters"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
