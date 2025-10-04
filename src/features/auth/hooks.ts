@@ -29,8 +29,9 @@ export const useSignup = () => {
   return useMutation({
     mutationFn: singupRequest,
     onSuccess: (data) => {
+      dispatch(login(data.data));
       dispatch(notifySuccess(data.message));
-      navigate("/auth/signin");
+      navigate("/blogs");
     },
     onError: (data: any) => {
       dispatch(notifyError(data.response.data.message));
