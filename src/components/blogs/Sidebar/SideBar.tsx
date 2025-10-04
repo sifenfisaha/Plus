@@ -167,27 +167,27 @@ const SideBar: React.FC = () => {
           <div>
             <ul className="dark:text-white flex gap-3 justify-around py-5">
               <li>
-                <a href="">
+                <a href="https://github.com/sifenfisaha">
                   <Github className="w-5" />
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="https://www.linkedin.com/in/sifenfisaha/">
                   <Linkedin className="w-5" />
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="https://x.com/See_Fun0">
                   <Twitter className="w-5" />
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="https://t.me/sifendev">
                   <Send className="w-5" />
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="sifenfisaha@gmail.com">
                   <MailIcon className="w-5" />
                 </a>
               </li>
