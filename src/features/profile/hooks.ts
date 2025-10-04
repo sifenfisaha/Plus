@@ -1,5 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { deleteuser, fetchUser, updateUser } from "../../api/user";
+import {
+  deleteuser,
+  fetchUser,
+  updatePassword,
+  updateUser,
+} from "../../api/user";
 import { queryClient } from "../../app/queryClient";
 import { useAppDispatch } from "../../app/hooks";
 import { logout } from "../auth/authSlice";
@@ -29,6 +34,21 @@ export const useDeleteUser = () => {
     onSuccess: (data) => {
       queryClient.removeQueries({ queryKey: ["user"] });
       dispach(logout());
+      dispach(notifySuccess(data.message));
+      navigate("/");
+    },
+    onError: (data: any) => {
+      dispach(notifyError(data.response.data.message));
+    },
+  });
+};
+
+export const useUpdatePassword = () => {
+  const dispach = useAppDispatch();
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: updatePassword,
+    onSuccess: (data) => {
       dispach(notifySuccess(data.message));
       navigate("/");
     },
