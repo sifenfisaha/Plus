@@ -2,16 +2,21 @@ import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import {
   addComment,
   bookmarkBlog,
+  deletBlog,
   fetchBlog,
   fetchPopularTags,
   fetchPublishedBlogs,
   likeBlog,
+  postBlog,
+  updateBlog,
 } from "../../api/blog";
 import { queryClient } from "../../app/queryClient";
 import type { IBlog } from "../../types/types";
 import { useAppDispatch } from "../../app/hooks";
 import type { AxiosError } from "axios";
 import { notifyError, notifySuccess } from "../ui/uiSlice";
+import { useNavigate } from "react-router-dom";
+import type { blogInput } from "../../utils/validationSchemas";
 
 export const useInfiniteBlogs = (
   filter: string,
@@ -163,6 +168,54 @@ export const useAddComment = () => {
       queryClient.invalidateQueries({ queryKey: ["blog", id] });
       queryClient.invalidateQueries({ queryKey: ["blogs"] });
       dispatch(notifySuccess(data.message));
+    },
+  });
+};
+
+export const useBlogPost = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: postBlog,
+    onSuccess: (data) => {
+      dispatch(notifySuccess(data.message));
+      navigate("/blogs");
+      queryClient.invalidateQueries({ queryKey: ["blogs"] });
+    },
+    onError: (err: any) => {
+      dispatch(notifyError(err.response.data.message));
+    },
+  });
+};
+
+export const useUpdateBlog = (id: string) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: (data: blogInput) => updateBlog(data, id),
+    onSuccess: (data) => {
+      dispatch(notifySuccess(data.message));
+      navigate("/blogs");
+      queryClient.invalidateQueries({ queryKey: ["blogs"] });
+    },
+    onError: (err: any) => {
+      dispatch(notifyError(err.response.data.message));
+    },
+  });
+};
+
+export const useDeleteBlog = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: deletBlog,
+    onSuccess: (data) => {
+      dispatch(notifySuccess(data.message));
+      navigate("/blogs");
+      queryClient.invalidateQueries({ queryKey: ["blogs"] });
+    },
+    onError: (err: any) => {
+      dispatch(notifyError(err.response.data.message));
     },
   });
 };

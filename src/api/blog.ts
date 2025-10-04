@@ -1,5 +1,5 @@
 import api from "../utils/axios";
-import type { commentInput } from "../utils/validationSchemas";
+import type { blogInput, commentInput } from "../utils/validationSchemas";
 
 interface Para {
   pageParam?: number;
@@ -50,5 +50,20 @@ export const addComment = async ({
 
 export const fetchPopularTags = async () => {
   const res = await api.get("/tags");
+  return res.data;
+};
+
+export const postBlog = async (blog: blogInput) => {
+  const res = await api.post(`/blog`, blog);
+  return res.data;
+};
+
+export const updateBlog = async (blog: blogInput, id: string) => {
+  const res = await api.put("/blog/" + id, blog);
+  return res.data;
+};
+
+export const deletBlog = async (id: string) => {
+  const res = await api.delete(`/blog/${id}`);
   return res.data;
 };
