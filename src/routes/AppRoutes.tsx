@@ -9,11 +9,13 @@ import BlogDetails from "../pages/BlogDetails";
 import BlogPost from "../pages/BlogPost";
 import EditBlog from "../pages/EditBlog";
 import Dashboard from "../pages/Dashboard";
+import NotFoundPage from "../pages/NotFound";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    errorElement: <NotFoundPage />,
     children: [
       { index: true, element: <Home /> },
       {
