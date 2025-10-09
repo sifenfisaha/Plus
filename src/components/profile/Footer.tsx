@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
           <ArrowRight className="w-5 hidden md:inline-block" />
         </Link>
         <Link to={'/blogs'} className="flex border-neutral-700/80 border dark:text-white capitalize px-4 py-2 cursor-pointer rounded-full shadow-white items-center justify-center gap-3">
-          <BookOpen className="w-5 hidden md:inline-block" /> brouse content
+          <BookOpen className="w-5 hidden md:inline-block" /> Browse content
         </Link>
       </div>
       <p className="text-neutral-400 text-center pt-8">
